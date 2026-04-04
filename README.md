@@ -48,10 +48,23 @@ npm run dev
 
 ---
 
-## 🚀 Production (With Docker)
-If you install Docker heavily in the future, the stack still natively supports full containerization orchestrating Postgres, Redis, Nginx, and Spring on isolated network bridges.
+---
+
+## 🚀 Cloud Deployment (Free Tier)
+
+This repository is pre-configured for a **one-click deployment** using free-tier services. 
+
+- **Frontend:** Deployed to [Vercel](https://vercel.com) (Root: `tourtravel-frontend`)
+- **Backend:** Deployed to [Render](https://render.com) (Root: `tourtravel-backend`, Environment: `Docker`)
+- **Database:** Hosted on [Neon.tech](https://neon.tech) (PostgreSQL)
+
+For detailed, step-by-step instructions on environment variables and database seeding, refer to the **[Deployment Plan](./deployment_plan.md)** (located in the artifacts directory).
+
+---
+
+## 🏗️ Production (With Docker/Self-Hosted)
+If you prefer to self-host using Docker Compose:
 
 ```bash
 docker-compose up --build -d
 ```
-# sainath-holidays
