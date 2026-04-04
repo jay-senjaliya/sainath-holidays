@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: tourtravel_postgres
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Automatically run init scripts
+      - ./tourtravel-backend/src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ./tourtravel-backend/src/main/resources/db/seed.sql:/docker-entrypoint-initdb.d/2_seed.sql
+    networks:
+      - tourtravel_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: tourtravel_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - tourtravel_net
+
+  backend:
+    build:
+      context: ./tourtravel-backend
+      dockerfile: Dockerfile
+    container_name: tourtravel_backend
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - tourtravel_net
+
+  frontend:
+    build:
+      context: ./tourtravel-frontend
+      dockerfile: Dockerfile
+    container_name: tourtravel_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - tourtravel_net
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  tourtravel_net:
+    driver: bridge

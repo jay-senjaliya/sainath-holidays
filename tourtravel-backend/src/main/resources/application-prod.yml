@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tourtravel}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 20000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate # Do not auto-generate DDL in prod
+    show-sql: false      # Disable verbose SQL logging for performance
+    properties:
+      hibernate:
+        format_sql: false
+        default_batch_fetch_size: 50 # Avoid N+1 issues
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+server:
+  port: 8080
+  compression:
+    enabled: true        # Enable dynamic Gzip Compression for large JSON payloads
+    min-response-size: 2048
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+
+jwt:
+  secret: ${JWT_SECRET:c2VjcmV0S2V5Rm9ySldUVG9rZW5TaWduYXR1cmUyMDI0ISFAIyQ=}
+  expiration: 3600000
+  refresh-expiration: 86400000
+
+logging:
+  level:
+    root: INFO
+    com.tourtravel: INFO
+    org.springframework.web: ERROR
+    org.hibernate.SQL: ERROR

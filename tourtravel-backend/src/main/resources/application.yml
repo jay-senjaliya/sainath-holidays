@@ -1,0 +1,108 @@
+spring:
+  application:
+    name: tourtravel-backend
+
+  # --- Database ---
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/tourtravel}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:argusadmin}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  # --- JPA / Hibernate ---
+  jpa:
+    hibernate:
+      ddl-auto: validate   # Schema managed via Flyway/SQL in prod; use 'create' for first run
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        default_batch_fetch_size: 20   # batches lazy-loaded collections (prevents N+1)
+        jdbc:
+          batch_size: 20
+    open-in-view: false
+
+  # --- Redis ---
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+  # --- OAuth2 ---
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:}
+            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            scope:
+              - email
+              - profile
+            redirect-uri: ${OAUTH2_REDIRECT_URI:http://localhost:8085/api/v1/auth/oauth2/callback/google}
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+
+  # --- Mail (OTP) ---
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:jaysenjaliya0070@gmail.com}
+    password: ${MAIL_PASSWORD:glzb bjmb rwiu rhoo}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+  # --- SQL init  ---
+  sql:
+    init:
+      mode: never   # Set to 'always' on first run to apply schema.sql + seed.sql
+
+# --- App config ---
+app:
+  jwt:
+    # Dev default — MUST be overridden via JWT_SECRET env var in production
+    # This is a Base64-encoded 256-bit HMAC-SHA256 key
+    secret: ${JWT_SECRET:dVpMQTViaGlMUWYwUWpTNldzNW9OM3RLcmdNZjlsK0pPSVBNWmpRcjVUND0=}
+    access-token-expiry-ms: 900000       # 15 minutes
+    refresh-token-expiry-days: 7
+  otp:
+    expiry-minutes: 5
+    length: 6
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173}
+  frontend:
+    url: ${FRONTEND_URL:http://localhost:5173}
+
+# --- SpringDoc / Swagger ---
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+# --- Actuator ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+server:
+  port: ${PORT:8085}
+  error:
+    include-message: always
+    include-binding-errors: always
