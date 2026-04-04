@@ -111,7 +111,7 @@ CREATE INDEX idx_otp_phone ON otp_requests (phone);
 -- ============================================================
 CREATE TABLE IF NOT EXISTS tour_packages (
     id              BIGSERIAL         PRIMARY KEY,
-    title           VARCHAR(200)      NOT NULL,
+    title           VARCHAR(200)      NOT NULL UNIQUE,
     description     TEXT              NOT NULL,
     price           NUMERIC(12, 2)    NOT NULL,
     duration_days   INT               NOT NULL,
@@ -163,7 +163,7 @@ CREATE INDEX idx_itinerary_pkg ON package_itineraries (package_id);
 CREATE TABLE IF NOT EXISTS vehicles (
     id                BIGSERIAL         PRIMARY KEY,
     vehicle_type      vehicle_type_enum NOT NULL,
-    name              VARCHAR(200)      NOT NULL,
+    name              VARCHAR(200)      NOT NULL UNIQUE,
     description       TEXT,
     price_per_day     NUMERIC(10, 2)    NOT NULL,
     seating_capacity  INT               NOT NULL,
@@ -181,7 +181,7 @@ CREATE INDEX idx_vehicle_available ON vehicles (available);
 -- ============================================================
 CREATE TABLE IF NOT EXISTS hotels (
     id              BIGSERIAL       PRIMARY KEY,
-    name            VARCHAR(200)    NOT NULL,
+    name            VARCHAR(200)    NOT NULL UNIQUE,
     location        VARCHAR(200)    NOT NULL,
     latitude        DOUBLE PRECISION,
     longitude       DOUBLE PRECISION,
