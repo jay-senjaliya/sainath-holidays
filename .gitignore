@@ -20,6 +20,9 @@ target/
 .env.development.local
 .env.test.local
 .env.production.local
+application-dev.yml
+*-dev.yml
+**/src/main/resources/application-dev.yml
 
 # Logs
 npm-debug.log*
