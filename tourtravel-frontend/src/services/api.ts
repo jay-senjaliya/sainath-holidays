@@ -2,8 +2,10 @@ import axios from 'axios';
 import { useAuthStore } from '@/store/useAuthStore';
 
 // Creates a centralized Axios instance
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
+
 export const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -75,7 +77,7 @@ api.interceptors.response.use(
         }
 
         // Call backend refresh endpoint
-        const { data } = await axios.post('/api/v1/auth/refresh', {
+        const { data } = await axios.post(`${BASE_URL}/auth/refresh`, {
           refreshToken,
         });
 
