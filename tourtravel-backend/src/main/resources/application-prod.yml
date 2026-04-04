@@ -18,9 +18,15 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 20000
 
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/seed.sql
+
   jpa:
     hibernate:
-      ddl-auto: validate # Do not auto-generate DDL in prod
+      ddl-auto: none # Let SQL init handle it
     show-sql: false      # Disable verbose SQL logging for performance
     properties:
       hibernate:

@@ -9,14 +9,53 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ============================================================
 -- ENUMs
 -- ============================================================
-CREATE TYPE user_role          AS ENUM ('ADMIN', 'USER');
-CREATE TYPE package_category   AS ENUM ('DOMESTIC', 'INTERNATIONAL', 'ADVENTURE',
-                                        'HONEYMOON', 'PILGRIMAGE', 'WILDLIFE',
-                                        'BEACH', 'CULTURAL');
-CREATE TYPE service_type       AS ENUM ('PACKAGE', 'HOTEL', 'VEHICLE', 'TICKET');
-CREATE TYPE enquiry_status     AS ENUM ('PENDING', 'IN_PROGRESS', 'RESOLVED', 'CANCELLED');
-CREATE TYPE vehicle_type_enum  AS ENUM ('SEDAN', 'SUV', 'TEMPO_TRAVELLER', 'BUS', 'LUXURY', 'BIKE');
-CREATE TYPE ticket_type_enum   AS ENUM ('BUS', 'TRAIN', 'FLIGHT');
+DO $$ BEGIN
+    CREATE TYPE user_role AS ENUM ('ADMIN', 'USER');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE package_category AS ENUM ('DOMESTIC', 'INTERNATIONAL', 'ADVENTURE', 'HONEYMOON', 'PILGRIMAGE', 'WILDLIFE', 'BEACH', 'CULTURAL');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE service_type AS ENUM ('PACKAGE', 'HOTEL', 'VEHICLE', 'TICKET');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE enquiry_status AS ENUM ('PENDING', 'IN_PROGRESS', 'RESOLVED', 'CANCELLED');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE vehicle_type_enum AS ENUM ('SEDAN', 'SUV', 'TEMPO_TRAVELLER', 'BUS', 'LUXURY', 'BIKE');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE ticket_type_enum AS ENUM ('BUS', 'TRAIN', 'FLIGHT');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE booking_status AS ENUM ('CONFIRMED', 'CANCELLED', 'COMPLETED');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+    CREATE TYPE payment_status AS ENUM ('PENDING', 'PARTIAL', 'FULL', 'REFUNDED');
+EXCEPTION
+    WHEN duplicate_object THEN null;
+END $$;
 
 -- ============================================================
 -- TABLE: users
@@ -231,8 +270,6 @@ CREATE TRIGGER trg_hotels_updated_at
 -- ============================================================
 -- CRM & BOOKING EXPANSION
 -- ============================================================
-CREATE TYPE booking_status AS ENUM ('CONFIRMED', 'CANCELLED', 'COMPLETED');
-CREATE TYPE payment_status AS ENUM ('PENDING', 'PARTIAL', 'FULL', 'REFUNDED');
 
 CREATE TABLE IF NOT EXISTS bookings (
     id                  BIGSERIAL PRIMARY KEY,
