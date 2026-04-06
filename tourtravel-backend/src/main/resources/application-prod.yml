@@ -11,9 +11,10 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 20
-      minimum-idle: 5
+      maximum-pool-size: 5
+      minimum-idle: 1
       idle-timeout: 30000
       max-lifetime: 1800000
       connection-timeout: 20000
@@ -21,40 +22,45 @@ spring:
   sql:
     init:
       mode: always
-      continue-on-error: true # Essential for handling existing types/tables
+      continue-on-error: true
       schema-locations: classpath:db/schema.sql
       data-locations: classpath:db/seed.sql
 
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none # Let SQL init handle it
-    show-sql: false      # Disable verbose SQL logging for performance
+      ddl-auto: none
+    show-sql: false
     properties:
       hibernate:
-        format_sql: false
-        default_batch_fetch_size: 50 # Avoid N+1 issues
+        jdbc.batch_size: 20
+        order_inserts: true
+        order_updates: true
 
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD:}
+  # Prevents crash if OAuth secrets are missing in Render settings
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:fake-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:fake-secret}
 
 server:
-  port: 8080
+  port: ${PORT:8080}
   compression:
-    enabled: true        # Enable dynamic Gzip Compression for large JSON payloads
+    enabled: true
     min-response-size: 2048
-    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 jwt:
-  secret: ${JWT_SECRET:c2VjcmV0S2V5Rm9ySldUVG9rZW5TaWduYXR1cmUyMDI0ISFAIyQ=}
+  secret: ${JWT_SECRET:MyDefaultStrongSecretKeyForProd2026!}
   expiration: 3600000
   refresh-expiration: 86400000
 
 logging:
   level:
     root: INFO
-    com.tourtravel: INFO
-    org.springframework.web: ERROR
+    com.tourtravel: DEBUG
+    org.springframework.web: INFO
     org.hibernate.SQL: ERROR
+    org.springframework.security: DEBUG
