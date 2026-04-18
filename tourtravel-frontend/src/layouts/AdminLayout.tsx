@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from "react-router-dom"
-import { Palmtree, LayoutDashboard, Package, Car, Building2, MessageSquare, LogOut, Calendar as CalendarIcon, Menu, X } from "lucide-react"
+import { Palmtree, LayoutDashboard, Package, Car, Building2, MessageSquare, LogOut, Calendar as CalendarIcon, Menu, X, Globe, Moon, Sun } from "lucide-react"
+import { useAuthStore } from "@/store/useAuthStore"
+import { useTheme } from "@/components/shared/ThemeProvider"
 
 interface SidebarProps {
   location: any;
   onClose: () => void;
+  logout: () => void;
 }
 
-const SidebarContent = ({ location, onClose }: SidebarProps) => {
+const SidebarContent = ({ location, onClose, logout }: SidebarProps) => {
   const navItems = [
     { label: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
     { label: 'Packages', path: '/admin/packages', icon: Package },
@@ -15,6 +18,7 @@ const SidebarContent = ({ location, onClose }: SidebarProps) => {
     { label: 'Vehicles', path: '/admin/vehicles', icon: Car },
     { label: 'Hotels', path: '/admin/hotels', icon: Building2 },
     { label: 'Enquiries', path: '/admin/enquiries', icon: MessageSquare },
+    { label: 'Back to Website', path: '/', icon: Globe, highlight: true },
   ];
 
   return (
@@ -45,10 +49,12 @@ const SidebarContent = ({ location, onClose }: SidebarProps) => {
               to={item.path} 
               onClick={onClose}
               className={`flex items-center gap-3 px-5 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all
-                ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'hover:bg-white/5 text-slate-400 hover:text-white'}
+                ${isActive ? 'bg-primary text-white shadow-lg shadow-primary/20' : 
+                  item.highlight ? 'bg-white/5 text-primary border border-primary/20 hover:bg-primary/10' : 
+                  'hover:bg-white/5 text-slate-400 hover:text-white'}
               `}
             >
-              <Icon className={`h-5 w-5 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-primary'}`} />
+              <Icon className={`h-5 w-5 ${isActive ? 'text-white' : item.highlight ? 'text-primary' : 'text-slate-500 group-hover:text-primary'}`} />
               {item.label}
             </Link>
           );
@@ -56,7 +62,10 @@ const SidebarContent = ({ location, onClose }: SidebarProps) => {
       </nav>
 
       <div className="p-6 border-t border-white/5">
-         <button className="flex items-center gap-3 px-5 py-4 w-full rounded-2xl text-[13px] font-black uppercase tracking-widest text-slate-500 hover:text-red-400 hover:bg-white/5 transition-all">
+         <button 
+           onClick={logout}
+           className="flex items-center gap-3 px-5 py-4 w-full rounded-2xl text-[13px] font-black uppercase tracking-widest text-slate-500 hover:text-red-400 hover:bg-white/5 transition-all"
+         >
             <LogOut className="h-5 w-5" />
             Sign Out
          </button>
@@ -68,12 +77,14 @@ const SidebarContent = ({ location, onClose }: SidebarProps) => {
 export function AdminLayout() {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const logout = useAuthStore(state => state.logout);
   
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-[#F8FAFC] overflow-hidden">
+    <div className="h-screen flex flex-col md:flex-row bg-background text-foreground overflow-hidden">
       {/* Desktop Sidebar */}
-      <aside className="w-full md:w-72 bg-[#0E2E50] text-white h-full hidden md:flex flex-col shadow-2xl flex-shrink-0">
-        <SidebarContent location={location} onClose={() => {}} />
+      <aside className="w-full md:w-72 bg-[#0E2E50] dark:bg-card text-white h-full hidden md:flex flex-col shadow-2xl flex-shrink-0">
+        <SidebarContent location={location} onClose={() => {}} logout={logout} />
       </aside>
 
       {/* Mobile Sidebar Overlay */}
@@ -86,20 +97,20 @@ export function AdminLayout() {
 
       {/* Mobile Sidebar */}
       <aside 
-        className={`fixed top-0 left-0 bottom-0 w-72 bg-[#0E2E50] text-white z-[70] md:hidden transform transition-transform duration-300 flex flex-col shadow-2xl
+        className={`fixed top-0 left-0 bottom-0 w-72 bg-[#0E2E50] dark:bg-card text-white z-[70] md:hidden transform transition-transform duration-300 flex flex-col shadow-2xl
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
-        <SidebarContent location={location} onClose={() => setIsMobileMenuOpen(false)} />
+        <SidebarContent location={location} onClose={() => setIsMobileMenuOpen(false)} logout={logout} />
       </aside>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
-        <header className="h-20 bg-white border-b flex items-center px-6 md:px-10 justify-between shrink-0">
+        <header className="h-20 bg-background border-b flex items-center px-6 md:px-10 justify-between shrink-0">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-slate-50 border text-slate-600 hover:bg-slate-100 transition-colors"
+              className="md:hidden h-10 w-10 flex items-center justify-center rounded-xl bg-secondary border text-foreground/70 hover:bg-secondary/80 transition-colors"
             >
               <Menu className="h-5 w-5" />
             </button>
@@ -110,11 +121,20 @@ export function AdminLayout() {
           </div>
           
           <div className="flex items-center gap-4 ml-auto">
+             {/* Theme Toggle */}
+             <button
+               onClick={toggleTheme}
+               className="p-2.5 rounded-xl bg-slate-50 border hover:bg-slate-100 transition-colors"
+               title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+             >
+               {theme === 'light' ? <Moon className="h-4 w-4 text-[#0E2E50]" /> : <Sun className="h-4 w-4 text-yellow-400" />}
+             </button>
+
              <div className="text-right hidden sm:block">
-               <div className="text-xs font-black text-[#0E2E50] uppercase tracking-widest">Admin User</div>
-               <div className="text-[10px] text-slate-400 font-bold uppercase">System Operator</div>
+               <div className="text-xs font-black text-foreground uppercase tracking-widest">Admin User</div>
+               <div className="text-[10px] text-muted-foreground font-bold uppercase">System Operator</div>
              </div>
-             <div className="h-10 w-10 rounded-xl bg-slate-100 border flex items-center justify-center font-black text-primary">A</div>
+             <div className="h-10 w-10 rounded-xl bg-secondary border flex items-center justify-center font-black text-primary">A</div>
           </div>
         </header>
 

@@ -3,8 +3,11 @@ import { useAuthStore } from "@/store/useAuthStore"
 import { Palmtree, Plane, Menu, X, Facebook, Instagram, Twitter, Mail, Phone, MapPin, ChevronRight } from "lucide-react"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { useTheme } from "@/components/shared/ThemeProvider"
+import { Moon, Sun } from "lucide-react"
 
 export function MainLayout() {
+  const { theme, toggleTheme } = useTheme()
   const { isAuthenticated, user, logout } = useAuthStore()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
@@ -24,9 +27,9 @@ export function MainLayout() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
       {/* Premium Navbar */}
-      <header className="sticky top-0 z-[100] w-full border-b bg-white/95 backdrop-blur shadow-sm">
+      <header className="sticky top-0 z-[100] w-full border-b bg-background/95 backdrop-blur-md shadow-sm transition-colors">
         <div className="container flex h-20 items-center justify-between px-4 md:px-8">
           <Link to="/" className="flex items-center gap-2 group shrink-0">
             <div className="relative">
@@ -34,13 +37,13 @@ export function MainLayout() {
               <Plane className="h-4 w-4 text-primary absolute -top-1 -right-1 rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </div>
             <div className="flex flex-col leading-none">
-              <span className="text-2xl font-black text-[#0E2E50] tracking-tighter uppercase font-serif">Sainath</span>
+              <span className="text-2xl font-black text-foreground tracking-tighter uppercase font-serif">Sainath</span>
               <span className="text-[10px] font-bold text-primary tracking-[0.3em] uppercase ml-0.5">Holidays</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex gap-8 text-[13px] font-bold uppercase tracking-wider text-[#0E2E50]">
+          <nav className="hidden lg:flex gap-8 text-[13px] font-bold uppercase tracking-wider text-foreground/80">
             {navLinks.map((link) => (
               <Link 
                 key={link.path} 
@@ -74,10 +77,19 @@ export function MainLayout() {
               )}
             </div>
 
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-xl bg-slate-100 dark:bg-white/10 hover:bg-slate-200 dark:hover:bg-white/20 transition-colors"
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? <Moon className="h-5 w-5 text-[#0E2E50]" /> : <Sun className="h-5 w-5 text-yellow-400" />}
+            </button>
+
             {/* Mobile Menu Toggle */}
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-[#0E2E50] hover:bg-slate-50 rounded-lg transition-colors"
+              className="lg:hidden p-2 text-foreground hover:bg-accent rounded-lg transition-colors"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -91,17 +103,17 @@ export function MainLayout() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-b overflow-hidden"
+              className="lg:hidden bg-background border-b overflow-hidden"
             >
               <div className="container py-8 px-6 flex flex-col gap-6">
                 {navLinks.map((link) => (
                   <Link 
                     key={link.path} 
                     to={link.path} 
-                    className="text-lg font-black text-[#0E2E50] uppercase tracking-widest flex items-center justify-between group"
+                    className="text-lg font-black text-foreground uppercase tracking-widest flex items-center justify-between group"
                   >
                     {link.label}
-                    <ChevronRight className="h-5 w-5 text-slate-200 group-hover:text-primary transition-colors" />
+                    <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </Link>
                 ))}
                 <div className="pt-6 border-t flex flex-col gap-4">
@@ -141,7 +153,7 @@ export function MainLayout() {
           {/* Brand Info */}
           <div className="space-y-8">
              <Link to="/" className="flex items-center gap-3">
-                <div className="p-2 bg-white rounded-xl shadow-xl">
+                <div className="p-2 bg-white dark:bg-white/10 rounded-xl shadow-xl">
                   <Palmtree className="h-8 w-8 text-primary" />
                 </div>
                 <div className="flex flex-col leading-none">
@@ -165,18 +177,24 @@ export function MainLayout() {
              </div>
           </div>
 
-          {/* Quick Links */}
           <div className="space-y-8">
             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white/50 relative inline-block">
               Quick Links
               <span className="absolute -bottom-2 left-0 w-8 h-1 bg-primary rounded-full"></span>
             </h4>
             <ul className="space-y-4">
-              {['Home', 'Tour Packages', 'Our Hotels', 'Vehicle Hire', 'About Us', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link to={item === 'Tour Packages' ? '/packages' : '#'} className="text-slate-400 hover:text-primary text-sm font-bold transition-colors flex items-center gap-2 group">
+              {[
+                { label: 'Home', path: '/' },
+                { label: 'Tour Packages', path: '/packages' },
+                { label: 'Our Hotels', path: '/hotels' },
+                { label: 'Vehicle Hire', path: '/vehicles' },
+                { label: 'About Us', path: '/about' },
+                { label: 'Contact', path: '/contact' }
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link to={item.path} className="text-slate-400 hover:text-primary text-sm font-bold transition-colors flex items-center gap-2 group">
                     <ChevronRight className="h-3 w-3 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-primary" />
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}

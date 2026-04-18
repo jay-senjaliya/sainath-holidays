@@ -21,7 +21,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.3 }}
-      className="group relative bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+      className="group relative bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
     >
       <div className="relative aspect-[4/3] overflow-hidden">
         <img
@@ -30,7 +30,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500 ease-in-out"
         />
         <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur rounded-full text-slate-800 shadow-sm uppercase tracking-wider">
+          <span className="px-3 py-1 text-xs font-semibold bg-background/90 dark:bg-card/90 backdrop-blur rounded-full text-foreground shadow-sm uppercase tracking-wider">
             {pkg.category}
           </span>
         </div>
@@ -58,7 +58,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           <div className="font-semibold text-xl">
             ₹{pkg.price?.toLocaleString()}
           </div>
-          <div className="flex items-center gap-1.5 text-sm font-medium text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full">
+          <div className="flex items-center gap-1.5 text-sm font-medium text-foreground bg-secondary px-3 py-1.5 rounded-full transition-colors">
             <Clock className="h-4 w-4" />
             {pkg.durationDays} Days
           </div>

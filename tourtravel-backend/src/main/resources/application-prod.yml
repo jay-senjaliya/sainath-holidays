@@ -37,14 +37,13 @@ spring:
         order_inserts: true
         order_updates: true
 
-  # Prevents crash if OAuth secrets are missing in Render settings
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID:fake-id}
-            client-secret: ${GOOGLE_CLIENT_SECRET:fake-secret}
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
 
 server:
   port: ${PORT:8080}
@@ -53,7 +52,7 @@ server:
     min-response-size: 2048
 
 jwt:
-  secret: ${JWT_SECRET:MyDefaultStrongSecretKeyForProd2026!}
+  secret: ${JWT_SECRET}
   expiration: 3600000
   refresh-expiration: 86400000
 

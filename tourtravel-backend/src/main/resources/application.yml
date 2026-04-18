@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: tourtravel-backend
 
@@ -40,8 +42,8 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_CLIENT_ID:}
-            client-secret: ${GOOGLE_CLIENT_SECRET:}
+            client-id: ${GOOGLE_CLIENT_ID:placeholder-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:placeholder-secret}
             scope:
               - email
               - profile

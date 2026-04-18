@@ -60,33 +60,33 @@ export function AdminVehicles() {
       </div>
 
       {isEditing ? (
-        <div className="p-6 bg-white border rounded-lg shadow-sm">
+        <div className="p-6 bg-card border border-border rounded-lg shadow-sm font-medium text-foreground">
           <h2 className="text-xl font-bold mb-4">{currentVehicle ? 'Edit Vehicle' : 'New Vehicle'}</h2>
           <form onSubmit={handleSubmit} className="space-y-4 max-w-2xl">
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Name</label>
-                <input required name="name" defaultValue={currentVehicle?.name} className="w-full border p-2 rounded" />
+               <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Name</label>
+                <input required name="name" defaultValue={currentVehicle?.name} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary" />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Type (SUV, SEDAN, LUXYURY...)</label>
-                <input required name="vehicleType" defaultValue={currentVehicle?.vehicleType} className="w-full border p-2 rounded" />
+               <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Type (SUV, SEDAN, LUXYURY...)</label>
+                <input required name="vehicleType" defaultValue={currentVehicle?.vehicleType} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary" />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Price/Day</label>
-                <input required type="number" name="pricePerDay" defaultValue={currentVehicle?.pricePerDay} className="w-full border p-2 rounded" />
+               <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Price/Day</label>
+                <input required type="number" name="pricePerDay" defaultValue={currentVehicle?.pricePerDay} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary" />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Capacity</label>
-                <input required type="number" name="seatingCapacity" defaultValue={currentVehicle?.seatingCapacity} className="w-full border p-2 rounded" />
+               <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Capacity</label>
+                <input required type="number" name="seatingCapacity" defaultValue={currentVehicle?.seatingCapacity} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary" />
               </div>
-              <div className="space-y-2 col-span-2">
-                <label className="text-sm font-medium">Description</label>
-                <textarea required name="description" defaultValue={currentVehicle?.description} className="w-full border p-2 rounded" />
+               <div className="space-y-2 col-span-2">
+                <label className="text-sm font-medium text-muted-foreground">Description</label>
+                <textarea required name="description" defaultValue={currentVehicle?.description} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary min-h-[100px]" />
               </div>
-              <div className="space-y-2 col-span-2">
-                <label className="text-sm font-medium">Image URL</label>
-                <input required name="imageUrl" defaultValue={currentVehicle?.imageUrl} className="w-full border p-2 rounded" />
+               <div className="space-y-2 col-span-2">
+                <label className="text-sm font-medium text-muted-foreground">Image URL</label>
+                <input required name="imageUrl" defaultValue={currentVehicle?.imageUrl} className="w-full bg-background border border-border p-2 rounded text-foreground outline-none focus:ring-1 focus:ring-primary" />
               </div>
               <div className="flex items-center space-x-2">
                 <input type="checkbox" name="available" defaultChecked={currentVehicle ? currentVehicle.available : true} id="avail" />
@@ -103,9 +103,50 @@ export function AdminVehicles() {
           </form>
         </div>
       ) : (
-        <div className="border rounded-lg bg-white overflow-hidden shadow-sm">
-          <table className="w-full text-sm text-left">
-            <thead className="bg-slate-50 text-slate-500 font-medium border-b">
+        <div className="border border-border rounded-[2.5rem] bg-card overflow-hidden shadow-xl">
+          {/* Mobile Card List */}
+          <div className="md:hidden divide-y divide-border">
+            {vehicles.map((v: any) => (
+              <div key={v.id} className="p-6 space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="h-16 w-32 rounded-2xl bg-secondary overflow-hidden shadow-inner flex-shrink-0">
+                    <img src={v.imageUrl} alt={v.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <div className="font-black text-foreground text-lg truncate uppercase italic tracking-tighter">{v.name}</div>
+                    <div className="text-xs text-muted-foreground font-medium uppercase tracking-widest">{v.vehicleType}</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-secondary/30 p-3 rounded-xl">
+                    <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Price/Day</div>
+                    <div className="font-black text-foreground">₹{v.pricePerDay}</div>
+                  </div>
+                  <div className="bg-secondary/30 p-3 rounded-xl">
+                    <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Status</div>
+                    <div className={`font-black uppercase text-[10px] ${v.available ? 'text-emerald-500' : 'text-destructive'}`}>
+                      {v.available ? 'Available' : 'Unavailable'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button variant="ghost" className="flex-1 h-12 rounded-xl bg-secondary text-foreground font-bold text-[10px] uppercase tracking-widest border border-border" onClick={() => { setCurrentVehicle(v); setIsEditing(true); }}>
+                    Edit
+                  </Button>
+                  <Button variant="ghost" className="h-12 w-12 rounded-xl bg-destructive/10 text-destructive border border-destructive/10" onClick={() => { if(confirm('Delete?')) deleteMutation.mutate(v.id); }}>
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="w-full text-sm text-left">
+            <thead className="bg-secondary text-muted-foreground font-medium border-b border-border">
               <tr>
                 <th className="px-6 py-3">Image</th>
                 <th className="px-6 py-3">Name</th>
@@ -115,17 +156,17 @@ export function AdminVehicles() {
                 <th className="px-6 py-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody>
+             <tbody>
               {vehicles.map((v: any) => (
-                <tr key={v.id} className="border-b last:border-0 hover:bg-slate-50">
+                <tr key={v.id} className="border-b border-border last:border-0 hover:bg-secondary/50 transition-colors">
                   <td className="px-6 py-3">
                     <img src={v.imageUrl} alt={v.name} className="w-12 h-8 object-cover rounded" />
                   </td>
                   <td className="px-6 py-3 font-medium">{v.name}</td>
                   <td className="px-6 py-3">{v.vehicleType}</td>
                   <td className="px-6 py-3">₹{v.pricePerDay}</td>
-                  <td className="px-6 py-3">
-                    <span className={`px-2 py-1 rounded text-xs px-2 py-1 rounded-full ${v.available ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                   <td className="px-6 py-3">
+                    <span className={`px-2 py-1 rounded text-xs px-2 py-1 rounded-full ${v.available ? 'bg-green-500/10 text-green-500' : 'bg-destructive/10 text-destructive'}`}>
                       {v.available ? 'Available' : 'Unavailable'}
                     </span>
                   </td>
@@ -145,7 +186,8 @@ export function AdminVehicles() {
             </tbody>
           </table>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Search, Map, ChevronRight } from 'lucide-react';
+import { Search, ChevronRight } from 'lucide-react';
 import { PackageMap } from '@/components/shared/PackageMap';
 import { PackageCard } from '@/features/packages/PackageCard';
 import { useQuery } from '@tanstack/react-query';
@@ -17,9 +17,9 @@ export function Home() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background text-foreground transition-colors duration-300">
       {/* Sainath Holidays Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-white overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center bg-background overflow-hidden">
         <div className="container grid lg:grid-cols-2 gap-12 items-center relative z-10 pt-20">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -28,10 +28,10 @@ export function Home() {
             className="space-y-8 max-w-xl"
           >
             <div className="space-y-2">
-              <h1 className="text-5xl md:text-7xl font-black text-[#0E2E50] leading-[1.1] tracking-tighter">
+              <h1 className="text-5xl md:text-7xl font-black text-foreground leading-[1.1] tracking-tighter">
                 Find A <span className="text-primary italic">Perfect</span> Travel Option
               </h1>
-              <h2 className="text-4xl md:text-5xl font-black text-[#0E2E50]/90 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-black text-foreground/90 leading-tight">
                 To Spend With Your <br />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-orange-400">Friends & Family</span>
               </h2>
@@ -45,13 +45,13 @@ export function Home() {
               <button className="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-xl font-black text-lg shadow-2xl shadow-primary/30 transition-all hover:-translate-y-1 active:translate-y-0 uppercase tracking-widest">
                 Get Started
               </button>
-              <div className="flex items-center gap-4 bg-slate-50 px-6 py-4 rounded-xl border border-slate-100 group cursor-pointer hover:bg-slate-100 transition-colors">
-                 <div className="h-12 w-12 rounded-full bg-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+              <div className="flex items-center gap-4 bg-secondary/50 dark:bg-white/5 px-6 py-4 rounded-xl border border-border group cursor-pointer hover:bg-secondary/80 dark:hover:bg-white/10 transition-colors">
+                 <div className="h-12 w-12 rounded-full bg-background flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                     <Search className="h-5 w-5 text-primary" />
                  </div>
                  <div className="flex flex-col">
-                   <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Quick Discovery</span>
-                   <span className="text-sm font-black text-[#0E2E50]">Search Destinations</span>
+                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none mb-1">Quick Discovery</span>
+                   <span className="text-sm font-black text-foreground">Search Destinations</span>
                  </div>
               </div>
             </div>
@@ -84,23 +84,23 @@ export function Home() {
             </div>
             
             {/* Absolute Decorative Elements */}
-            <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-[2rem] shadow-2xl border flex items-center gap-4 animate-bounce">
-               <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold">10k+</div>
+            <div className="absolute -bottom-10 -left-10 bg-background dark:bg-card p-6 rounded-[2rem] shadow-2xl border border-border flex items-center gap-4 animate-bounce">
+               <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">10k+</div>
                <div>
-                 <div className="text-xs font-black text-slate-800">Happy Travelers</div>
-                 <div className="text-[10px] text-slate-400 font-bold">In last 12 months</div>
+                 <div className="text-xs font-black text-foreground">Happy Travelers</div>
+                 <div className="text-[10px] text-muted-foreground font-bold">In last 12 months</div>
                </div>
             </div>
           </motion.div>
         </div>
 
         {/* Background Accents */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-slate-50 -skew-x-12 translate-x-1/2 z-0"></div>
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-secondary/30 dark:bg-white/5 -skew-x-12 translate-x-1/2 z-0"></div>
       </section>
 
 
       {/* Featured Packages */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-secondary/20 dark:bg-background/50">
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Featured Destinations</h2>
@@ -118,7 +118,7 @@ export function Home() {
       </section>
 
       {/* Interactive Map Section */}
-      <section className="py-24 bg-white relative">
+      <section className="py-24 bg-background relative">
         <div className="container">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>

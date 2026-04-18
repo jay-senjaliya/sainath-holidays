@@ -141,7 +141,7 @@ export function AdminPackages() {
       {isEditing ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
           <div className="lg:col-span-2 space-y-6">
-            <div className="p-8 bg-white border rounded-3xl shadow-sm space-y-8">
+            <div className="p-8 bg-card border border-border rounded-3xl shadow-sm space-y-8">
               <h2 className="text-xl font-bold flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-lg"><Pencil className="h-5 w-5 text-primary" /></div>
                 {currentPackage ? 'Update Package Details' : 'Create New Package'}
@@ -150,13 +150,13 @@ export function AdminPackages() {
               <form id="packageForm" onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2 col-span-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Package Title</label>
-                    <input required name="title" defaultValue={currentPackage?.title} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary transition-all text-lg" placeholder="e.g. 5 Days Kerala Backwater Tour" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Package Title</label>
+                    <input required name="title" defaultValue={currentPackage?.title} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary transition-all text-lg text-foreground outline-none" placeholder="e.g. 5 Days Kerala Backwater Tour" />
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Category</label>
-                    <select name="category" defaultValue={currentPackage?.category || 'DOMESTIC'} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary">
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Category</label>
+                    <select name="category" defaultValue={currentPackage?.category || 'DOMESTIC'} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-foreground outline-none">
                       <option value="DOMESTIC">DOMESTIC</option>
                       <option value="INTERNATIONAL">INTERNATIONAL</option>
                       <option value="HONEYMOON">HONEYMOON</option>
@@ -167,40 +167,40 @@ export function AdminPackages() {
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Location</label>
-                    <input required name="location" defaultValue={currentPackage?.location} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary" placeholder="e.g. Munnar, Kerala" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Location</label>
+                    <input required name="location" defaultValue={currentPackage?.location} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-foreground outline-none" placeholder="e.g. Munnar, Kerala" />
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Duration (Days)</label>
-                    <input required type="number" name="durationDays" defaultValue={currentPackage?.durationDays} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary text-center font-bold" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Duration (Days)</label>
+                    <input required type="number" name="durationDays" defaultValue={currentPackage?.durationDays} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-center font-bold text-foreground outline-none" />
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Price (₹)</label>
-                    <input required type="number" name="price" defaultValue={currentPackage?.price} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary text-center font-bold" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Price (₹)</label>
+                    <input required type="number" name="price" defaultValue={currentPackage?.price} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-center font-bold text-foreground outline-none" />
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Latitude</label>
-                    <input required type="number" step="any" name="latitude" defaultValue={currentPackage?.latitude || 0} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Latitude</label>
+                    <input required type="number" step="any" name="latitude" defaultValue={currentPackage?.latitude || 0} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-foreground outline-none" />
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Longitude</label>
-                    <input required type="number" step="any" name="longitude" defaultValue={currentPackage?.longitude || 0} className="w-full border-slate-200 p-4 rounded-2xl focus:ring-primary focus:border-primary" />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Longitude</label>
+                    <input required type="number" step="any" name="longitude" defaultValue={currentPackage?.longitude || 0} className="w-full bg-background border border-border p-4 rounded-2xl focus:ring-primary focus:border-primary text-foreground outline-none" />
                   </div>
 
                   <div className="space-y-2 col-span-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Description</label>
-                    <textarea required name="description" defaultValue={currentPackage?.description} className="w-full border-slate-200 p-4 rounded-2xl h-48 focus:ring-primary focus:border-primary transition-all resize-none" placeholder="Describe the magical experience..." />
+                    <label className="text-xs font-bold text-muted-foreground uppercase tracking-widest px-1">Description</label>
+                    <textarea required name="description" defaultValue={currentPackage?.description} className="w-full bg-background border border-border p-4 rounded-2xl h-48 focus:ring-primary focus:border-primary transition-all resize-none text-foreground outline-none" placeholder="Describe the magical experience..." />
                   </div>
                 </div>
               </form>
             </div>
 
             {/* Itineraries Section */}
-            <div className="p-8 bg-white border rounded-3xl shadow-sm space-y-8">
+            <div className="p-8 bg-card border border-border rounded-3xl shadow-sm space-y-8">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold flex items-center gap-3">
                   <div className="p-2 bg-primary/10 rounded-lg"><Clock className="h-5 w-5 text-primary" /></div>
@@ -211,22 +211,22 @@ export function AdminPackages() {
               
               <div className="space-y-6">
                 {itineraries.map((it, idx) => (
-                  <div key={idx} className="p-6 border border-slate-100 rounded-3xl bg-slate-50/50 space-y-4 relative group hover:bg-white hover:border-slate-200 transition-all shadow-sm">
+                  <div key={idx} className="p-6 border border-border bg-secondary/50 rounded-3xl space-y-4 relative group hover:bg-background/80 hover:border-border transition-all shadow-sm">
                     <div className="grid grid-cols-6 gap-6">
                       <div className="col-span-1">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Day</label>
-                        <input type="number" value={it.dayNumber} onChange={(e) => updateItinerary(idx, 'dayNumber', e.target.value)} className="w-full border-slate-200 bg-white p-3 rounded-xl text-center font-black text-primary text-xl" />
+                        <input type="number" value={it.dayNumber} onChange={(e) => updateItinerary(idx, 'dayNumber', e.target.value)} className="w-full border-border bg-background p-3 rounded-xl text-center font-black text-primary text-xl" />
                       </div>
                       <div className="col-span-4">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase">Day Title</label>
-                        <input value={it.title} onChange={(e) => updateItinerary(idx, 'title', e.target.value)} className="w-full border-slate-200 bg-white p-3 rounded-xl font-bold" placeholder="e.g. Arrival in Munnar and Site Seeing" />
+                        <label className="text-[10px] font-bold text-muted-foreground uppercase">Day Title</label>
+                        <input value={it.title} onChange={(e) => updateItinerary(idx, 'title', e.target.value)} className="w-full border-border bg-background p-3 rounded-xl font-bold text-foreground" placeholder="e.g. Arrival in Munnar and Site Seeing" />
                       </div>
                       <div className="col-span-1 flex items-end justify-center">
-                        <Button variant="ghost" size="icon" onClick={() => removeItinerary(idx)} className="text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full h-12 w-12"><Trash2 className="h-5 w-5"/></Button>
+                        <Button variant="ghost" size="icon" onClick={() => removeItinerary(idx)} className="text-destructive/60 hover:text-destructive hover:bg-destructive/10 rounded-full h-12 w-12"><Trash2 className="h-5 w-5"/></Button>
                       </div>
                       <div className="col-span-6">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase">Activities</label>
-                        <textarea value={it.description} onChange={(e) => updateItinerary(idx, 'description', e.target.value)} className="w-full border-slate-200 bg-white p-4 rounded-2xl h-24 resize-none" placeholder="What will they do today?" />
+                        <label className="text-[10px] font-bold text-muted-foreground uppercase">Activities</label>
+                        <textarea value={it.description} onChange={(e) => updateItinerary(idx, 'description', e.target.value)} className="w-full border-border bg-background p-4 rounded-2xl h-24 resize-none text-foreground" placeholder="What will they do today?" />
                       </div>
                     </div>
                   </div>
@@ -236,7 +236,7 @@ export function AdminPackages() {
           </div>
 
           <div className="space-y-6">
-            <div className="p-8 bg-white border rounded-3xl shadow-sm space-y-6">
+            <div className="p-8 bg-card border border-border rounded-3xl shadow-sm space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold flex items-center gap-3">
                   <div className="p-2 bg-primary/10 rounded-lg"><ImageIcon className="h-5 w-5 text-primary" /></div>
@@ -247,18 +247,18 @@ export function AdminPackages() {
 
               <div className="space-y-4">
                 {images.map((img, idx) => (
-                  <div key={idx} className="space-y-3 p-4 border rounded-2xl relative group bg-slate-50/30">
+                  <div key={idx} className="space-y-3 p-4 border border-border rounded-2xl relative group bg-secondary/30">
                     {img.imageUrl && (
                       <div className="h-32 w-full rounded-xl overflow-hidden mb-2 shadow-inner">
                         <img src={img.imageUrl} alt="preview" className="w-full h-full object-cover" />
                       </div>
                     )}
                     <div className="space-y-1">
-                       <label className="text-[10px] font-bold text-slate-400 uppercase">Image URL</label>
+                       <label className="text-[10px] font-bold text-muted-foreground uppercase">Image URL</label>
                        <input 
                         value={img.imageUrl} 
                         onChange={(e) => updateImage(idx, 'imageUrl', e.target.value)} 
-                        className="w-full text-xs border border-slate-200 p-3 rounded-xl bg-white" 
+                        className="w-full text-xs border border-border p-3 rounded-xl bg-background text-foreground" 
                         placeholder="https://images.unsplash.com/..." 
                       />
                     </div>
@@ -273,7 +273,7 @@ export function AdminPackages() {
                         </div>
                         Main Thumbnail
                       </button>
-                      <Button variant="ghost" size="icon" onClick={() => removeImage(idx)} className="h-8 w-8 text-red-300 hover:text-red-500"><X className="h-4 w-4"/></Button>
+                      <Button variant="ghost" size="icon" onClick={() => removeImage(idx)} className="h-8 w-8 text-destructive/40 hover:text-destructive"><X className="h-4 w-4"/></Button>
                     </div>
                   </div>
                 ))}
@@ -294,10 +294,48 @@ export function AdminPackages() {
           </div>
         </div>
       ) : (
-        <div className="border rounded-[2rem] bg-white overflow-hidden shadow-xl border-slate-100">
-          <div className="overflow-x-auto">
+        <div className="border border-border rounded-[2rem] bg-card overflow-hidden shadow-xl">
+          {/* Mobile Card List */}
+          <div className="md:hidden divide-y divide-border">
+            {packages.map((p: any) => (
+              <div key={p.id} className="p-6 space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="h-16 w-16 rounded-2xl bg-secondary overflow-hidden flex-shrink-0 shadow-inner">
+                    {p.primaryImageUrl && <img src={p.primaryImageUrl} className="w-full h-full object-cover" />}
+                  </div>
+                  <div className="flex-1 overflow-hidden">
+                    <div className="font-black text-foreground text-lg truncate uppercase italic tracking-tighter">{p.title}</div>
+                    <div className="text-xs text-muted-foreground font-medium">{p.durationDays} Days / {p.durationDays - 1} Nights</div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-secondary/30 p-3 rounded-xl">
+                    <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Price</div>
+                    <div className="font-black text-foreground">₹{p.price?.toLocaleString()}</div>
+                  </div>
+                  <div className="bg-secondary/30 p-3 rounded-xl">
+                    <div className="text-[10px] font-bold text-muted-foreground uppercase mb-1">Category</div>
+                    <div className="font-black text-primary text-[10px] uppercase truncate">{p.category}</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <Button variant="ghost" className="flex-1 h-12 rounded-xl bg-secondary text-foreground font-bold text-[10px] uppercase tracking-widest border border-border" onClick={() => { setCurrentPackage(p); setIsEditing(true); }}>
+                    Edit
+                  </Button>
+                  <Button variant="ghost" className="h-12 w-12 rounded-xl bg-destructive/10 text-destructive border border-destructive/10" onClick={() => { if(confirm('Are you sure?')) deleteMutation.mutate(p.id); }}>
+                    <Trash2 className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-slate-50/50 text-slate-400 font-bold uppercase tracking-[0.15em] text-[10px] border-b">
+              <thead className="bg-secondary/50 text-muted-foreground font-bold uppercase tracking-[0.15em] text-[10px] border-b border-border">
                 <tr>
                   <th className="px-8 py-5">Package</th>
                   <th className="px-8 py-5">Location</th>
@@ -311,22 +349,22 @@ export function AdminPackages() {
                   <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
                     <td className="px-8 py-6">
                       <div className="flex items-center gap-4">
-                        <div className="h-14 w-14 rounded-2xl bg-slate-100 overflow-hidden flex-shrink-0 shadow-inner group-hover:scale-110 transition-transform">
+                        <div className="h-14 w-14 rounded-2xl bg-secondary overflow-hidden flex-shrink-0 shadow-inner group-hover:scale-110 transition-transform">
                           {p.primaryImageUrl && <img src={p.primaryImageUrl} className="w-full h-full object-cover" />}
                         </div>
                         <div>
-                          <div className="font-black text-slate-900 text-base">{p.title}</div>
-                          <div className="text-xs text-slate-500 mt-0.5">{p.durationDays} Days / {p.durationDays - 1} Nights</div>
+                          <div className="font-black text-foreground text-base">{p.title}</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">{p.durationDays} Days / {p.durationDays - 1} Nights</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-8 py-6 text-slate-600 font-medium">{p.location}</td>
+                    <td className="px-8 py-6 text-muted-foreground font-medium">{p.location}</td>
                     <td className="px-8 py-6">
-                      <span className="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-600 font-bold text-[9px] tracking-wider uppercase">
+                      <span className="px-3 py-1.5 rounded-xl bg-secondary text-foreground/70 font-bold text-[9px] tracking-wider uppercase border border-border">
                         {p.category}
                       </span>
                     </td>
-                    <td className="px-8 py-6 font-black text-slate-900 text-base">
+                    <td className="px-8 py-6 font-black text-foreground text-base">
                       {p.price ? `₹${p.price.toLocaleString()}` : 'N/A'}
                     </td>
                     <td className="px-8 py-6 text-right">
@@ -345,9 +383,9 @@ export function AdminPackages() {
             </table>
           </div>
           {packages.length === 0 && (
-            <div className="text-center py-32 bg-slate-50/30 flex flex-col items-center gap-4">
-              <div className="p-4 bg-white rounded-[2rem] shadow-sm"><ImageIcon className="h-12 w-12 text-slate-200" /></div>
-              <div className="text-slate-400 font-bold uppercase tracking-widest text-xs">No packages in inventory yet</div>
+            <div className="text-center py-32 bg-secondary/20 flex flex-col items-center gap-4">
+              <div className="p-4 bg-card rounded-[2rem] shadow-sm"><ImageIcon className="h-12 w-12 text-muted-foreground/30" /></div>
+              <div className="text-muted-foreground font-bold uppercase tracking-widest text-xs">No packages in inventory yet</div>
               <Button onClick={() => setIsEditing(true)} variant="link" className="text-primary font-bold">Begin by adding your first tour!</Button>
             </div>
           )}

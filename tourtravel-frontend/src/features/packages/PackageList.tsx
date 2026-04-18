@@ -32,7 +32,7 @@ export function PackageList() {
   const categories = ['DOMESTIC', 'INTERNATIONAL', 'ADVENTURE', 'HONEYMOON', 'WILDLIFE', 'CULTURAL'];
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-background min-h-screen pb-24 text-foreground transition-colors duration-300">
       {/* Top Banner */}
       <div className="bg-slate-900 text-white py-16">
         <div className="container text-center">
@@ -47,7 +47,7 @@ export function PackageList() {
         
         {/* Mobile Filter Toggle */}
         <button 
-          className="md:hidden w-full flex items-center justify-center gap-2 bg-white border p-3 rounded-lg font-medium"
+          className="md:hidden w-full flex items-center justify-center gap-2 bg-card border border-border p-3 rounded-lg font-medium shadow-sm transition-colors"
           onClick={() => setIsFilterOpen(!isFilterOpen)}
         >
           <Filter className="h-5 w-5" /> Filters
@@ -60,7 +60,7 @@ export function PackageList() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="w-full md:w-64 flex-shrink-0 bg-white border rounded-2xl p-6 h-fit md:sticky top-24 overflow-hidden"
+              className="w-full md:w-64 flex-shrink-0 bg-card border border-border rounded-2xl p-6 h-fit md:sticky top-24 overflow-hidden shadow-sm"
             >
               <div className="flex justify-between items-center mb-6">
                 <h2 className="font-bold text-lg flex items-center gap-2">
@@ -75,11 +75,11 @@ export function PackageList() {
 
               {/* Category Filter */}
               <div className="mb-6">
-                <h3 className="font-semibold text-sm text-slate-900 mb-3 uppercase tracking-wider">Category</h3>
+                <h3 className="font-semibold text-sm text-foreground mb-3 uppercase tracking-wider">Category</h3>
                 <div className="flex flex-col gap-2">
                   <button 
                     onClick={() => { setFilterCategory(''); setPage(0); }}
-                    className={`text-left px-3 py-2 rounded-md text-sm transition-colors ${filterCategory === '' ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-slate-100 text-slate-600'}`}
+                    className={`text-left px-3 py-2 rounded-md text-sm transition-colors ${filterCategory === '' ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-secondary text-muted-foreground hover:text-foreground'}`}
                   >
                     All Categories
                   </button>
@@ -87,7 +87,7 @@ export function PackageList() {
                     <button 
                       key={cat}
                       onClick={() => { setFilterCategory(cat); setPage(0); }}
-                      className={`text-left px-3 py-2 rounded-md text-sm transition-colors ${filterCategory === cat ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-slate-100 text-slate-600'}`}
+                      className={`text-left px-3 py-2 rounded-md text-sm transition-colors ${filterCategory === cat ? 'bg-primary/10 text-primary font-medium' : 'hover:bg-secondary text-muted-foreground hover:text-foreground'}`}
                     >
                       {cat.charAt(0) + cat.slice(1).toLowerCase()}
                     </button>
@@ -107,8 +107,8 @@ export function PackageList() {
           ) : (
             <>
               {data?.content?.length === 0 ? (
-                <div className="bg-white border rounded-2xl p-12 text-center flex flex-col items-center justify-center h-[400px]">
-                  <Search className="h-12 w-12 text-slate-300 mb-4" />
+                <div className="bg-card border border-border rounded-2xl p-12 text-center flex flex-col items-center justify-center h-[400px] shadow-sm">
+                  <Search className="h-12 w-12 text-muted-foreground/30 mb-4" />
                   <h3 className="text-xl font-bold mb-2">No packages found</h3>
                   <p className="text-muted-foreground">Try adjusting your filters or search criteria.</p>
                   <button 
@@ -132,7 +132,7 @@ export function PackageList() {
                   <button 
                     disabled={data.first}
                     onClick={() => setPage(p => p - 1)}
-                    className="px-4 py-2 border bg-white rounded-md disabled:opacity-50 hover:bg-slate-50 font-medium text-sm"
+                    className="px-4 py-2 border border-border bg-card text-foreground rounded-md disabled:opacity-50 hover:bg-secondary font-medium text-sm transition-colors"
                   >
                     Previous
                   </button>

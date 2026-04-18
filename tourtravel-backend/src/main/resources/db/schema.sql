@@ -9,16 +9,32 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ============================================================
 -- ENUMs
 -- ============================================================
-CREATE TYPE user_role          AS ENUM ('ADMIN', 'USER');
-CREATE TYPE package_category   AS ENUM ('DOMESTIC', 'INTERNATIONAL', 'ADVENTURE',
-                                        'HONEYMOON', 'PILGRIMAGE', 'WILDLIFE',
-                                        'BEACH', 'CULTURAL');
-CREATE TYPE service_type       AS ENUM ('PACKAGE', 'HOTEL', 'VEHICLE', 'TICKET');
-CREATE TYPE enquiry_status     AS ENUM ('PENDING', 'IN_PROGRESS', 'RESOLVED', 'CANCELLED');
-CREATE TYPE vehicle_type_enum  AS ENUM ('SEDAN', 'SUV', 'TEMPO_TRAVELLER', 'BUS', 'LUXURY', 'BIKE');
-CREATE TYPE ticket_type_enum   AS ENUM ('BUS', 'TRAIN', 'FLIGHT');
-CREATE TYPE booking_status     AS ENUM ('CONFIRMED', 'CANCELLED', 'COMPLETED');
-CREATE TYPE payment_status     AS ENUM ('PENDING', 'PARTIAL', 'FULL', 'REFUNDED');
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+        CREATE TYPE user_role AS ENUM ('ADMIN', 'USER');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'package_category') THEN
+        CREATE TYPE package_category AS ENUM ('DOMESTIC', 'INTERNATIONAL', 'ADVENTURE', 'HONEYMOON', 'PILGRIMAGE', 'WILDLIFE', 'BEACH', 'CULTURAL');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'service_type') THEN
+        CREATE TYPE service_type AS ENUM ('PACKAGE', 'HOTEL', 'VEHICLE', 'TICKET');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enquiry_status') THEN
+        CREATE TYPE enquiry_status AS ENUM ('PENDING', 'IN_PROGRESS', 'RESOLVED', 'CANCELLED');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'vehicle_type_enum') THEN
+        CREATE TYPE vehicle_type_enum AS ENUM ('SEDAN', 'SUV', 'TEMPO_TRAVELLER', 'BUS', 'LUXURY', 'BIKE');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ticket_type_enum') THEN
+        CREATE TYPE ticket_type_enum AS ENUM ('BUS', 'TRAIN', 'FLIGHT');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'booking_status') THEN
+        CREATE TYPE booking_status AS ENUM ('CONFIRMED', 'CANCELLED', 'COMPLETED');
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'payment_status') THEN
+        CREATE TYPE payment_status AS ENUM ('PENDING', 'PARTIAL', 'FULL', 'REFUNDED');
+    END IF;
+END $$;
 
 -- ============================================================
 -- TABLE: users

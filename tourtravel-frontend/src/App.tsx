@@ -20,10 +20,12 @@ import { EnquirySubmit } from '@/features/enquiries/EnquirySubmit';
 import { OAuth2Callback } from '@/features/auth/OAuth2Callback';
 import { AboutUs } from '@/pages/AboutUs';
 import { Contact } from '@/pages/Contact';
+import { ThemeProvider } from '@/components/shared/ThemeProvider';
 
 function App() {
   return (
-    <BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
       <Routes>
         {/* Auth Routes */}
         <Route element={<AuthLayout />}>
@@ -68,6 +70,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

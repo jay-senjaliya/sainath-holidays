@@ -74,7 +74,7 @@ export function Login() {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white p-8 rounded-2xl shadow-xl w-full border"
+      className="bg-card p-8 rounded-2xl shadow-xl w-full border border-border"
     >
       <div className="flex gap-4 mb-8 border-b pb-4">
         <button
@@ -92,7 +92,7 @@ export function Login() {
       </div>
 
       {error && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-md mb-6 text-sm">
+        <div className="bg-destructive/10 text-destructive p-3 rounded-md mb-6 text-sm border border-destructive/20">
           {error}
         </div>
       )}
@@ -105,7 +105,7 @@ export function Login() {
               type="email"
               placeholder="Email address"
               required
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-foreground"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -116,7 +116,7 @@ export function Login() {
               type="password"
               placeholder="Password"
               required
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-foreground"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -138,19 +138,19 @@ export function Login() {
               placeholder="Phone number"
               required
               disabled={otpSent}
-              className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary disabled:opacity-50 focus:border-transparent outline-none transition-all"
+              className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary disabled:opacity-50 focus:border-transparent outline-none transition-all text-foreground"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           {otpSent && (
             <div className="relative">
-              <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+              <Lock className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Enter 6-digit OTP"
                 required
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-foreground"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />
@@ -170,7 +170,7 @@ export function Login() {
         <p>Or continue with OAuth</p>
         <a 
           href="http://localhost:8085/api/v1/auth/oauth2/authorize/google" 
-          className="mt-4 w-full flex items-center justify-center gap-2 border py-2.5 rounded-lg font-medium hover:bg-slate-50 transition-colors"
+          className="mt-4 w-full flex items-center justify-center gap-2 border border-border py-2.5 rounded-lg font-medium hover:bg-secondary transition-colors text-foreground"
         >
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5" />
           Sign in with Google

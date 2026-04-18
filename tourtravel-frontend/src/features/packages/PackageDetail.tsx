@@ -24,7 +24,7 @@ export function PackageDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 pt-20 px-4">
+      <div className="min-h-screen bg-background pt-20 px-4 transition-colors duration-300">
         <div className="container max-w-6xl animate-pulse">
           <div className="h-8 bg-slate-200 w-1/3 rounded-lg mb-6"></div>
           <div className="h-[60vh] bg-slate-200 w-full rounded-2xl mb-8"></div>
@@ -40,7 +40,7 @@ export function PackageDetail() {
   const primaryImage = pkg.images?.find((img: any) => img.primary) || pkg.images?.[0];
 
   return (
-    <div className="bg-slate-50 min-h-screen pb-24">
+    <div className="bg-background min-h-screen pb-24 text-foreground transition-colors duration-300">
       
       {/* Main Image Banner */}
       <div className="relative h-[60vh] min-h-[500px] w-full bg-slate-900">
@@ -103,12 +103,12 @@ export function PackageDetail() {
           
           {/* Main Content */}
           <div className="flex-1">
-            <section className="bg-white p-8 border rounded-2xl shadow-sm mb-8">
+            <section className="bg-card p-8 border border-border rounded-2xl shadow-sm mb-8">
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                 <Navigation className="h-6 w-6 text-primary" />
                 Overview
               </h2>
-              <div className="prose max-w-none text-slate-600 leading-relaxed font-medium">
+              <div className="prose max-w-none text-muted-foreground leading-relaxed font-medium">
                 {pkg.description?.split(/\r?\n/).map((para: string, i: number) => (
                   <p key={i} className="mb-4">{para}</p>
                 ))}
@@ -117,7 +117,7 @@ export function PackageDetail() {
 
             {/* Itinerary */}
             {pkg.itineraries && pkg.itineraries.length > 0 && (
-              <section className="bg-white p-8 border rounded-2xl shadow-sm">
+              <section className="bg-card p-8 border border-border rounded-2xl shadow-sm">
                 <h2 className="text-2xl font-bold mb-8 flex items-center gap-2">
                   <Clock className="h-6 w-6 text-primary" /> 
                   Itinerary
@@ -131,9 +131,9 @@ export function PackageDetail() {
                     >
                       <button
                         onClick={() => setActiveDay(activeDay === day.dayNumber ? 0 : day.dayNumber)}
-                        className={`w-full text-left px-6 py-4 flex items-center justify-between transition-colors ${activeDay === day.dayNumber ? 'bg-primary/5' : 'bg-white hover:bg-slate-50'}`}
+                        className={`w-full text-left px-6 py-4 flex items-center justify-between transition-colors ${activeDay === day.dayNumber ? 'bg-primary/10' : 'bg-card hover:bg-secondary'}`}
                       >
-                        <span className="font-bold text-lg">Day {day.dayNumber}: <span className="text-slate-600 font-medium ml-2">{day.title}</span></span>
+                        <span className="font-bold text-lg">Day {day.dayNumber}: <span className="text-muted-foreground font-medium ml-2">{day.title}</span></span>
                         <div className={`transform transition-transform ${activeDay === day.dayNumber ? 'rotate-180' : ''}`}>▼</div>
                       </button>
                       
@@ -145,7 +145,7 @@ export function PackageDetail() {
                             exit={{ height: 0, opacity: 0 }}
                             className="overflow-hidden"
                           >
-                            <div className="px-6 pb-6 pt-2 text-slate-600 border-t">
+                            <div className="px-6 pb-6 pt-2 text-muted-foreground border-t border-border">
                               <p className="leading-relaxed whitespace-pre-wrap">{day.description}</p>
                             </div>
                           </motion.div>
@@ -187,26 +187,18 @@ export function PackageDetail() {
 
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-600">Best price guarantee</span>
+                  <span className="text-slate-400">Best price guarantee</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-600">No hidden booking fees</span>
+                  <span className="text-slate-400">No hidden booking fees</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
-                  <span className="text-slate-600">Secure payments</span>
+                  <span className="text-slate-400">Secure payments</span>
                 </div>
               </div>
 
-              {/* In a real app, this would open the Enquiry Modal */}
-              <button className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-colors shadow-lg shadow-primary/30 mb-4 flex items-center justify-center gap-2">
-                <MessageSquare className="h-5 w-5" /> Send Enquiry
-              </button>
-              
-              <Link to="/enquiries/submit" className="w-full block text-center py-2 text-primary font-medium hover:underline">
-                Ask a question
-              </Link>
             </div>
           </div>
 
