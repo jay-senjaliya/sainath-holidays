@@ -169,7 +169,7 @@ export function Login() {
       <div className="mt-8 text-center text-sm text-muted-foreground">
         <p>Or continue with OAuth</p>
         <a 
-          href="http://localhost:8085/api/v1/auth/oauth2/authorize/google" 
+          href={`${import.meta.env.VITE_API_BASE_URL || '/api/v1'}/auth/oauth2/authorize/google`} 
           className="mt-4 w-full flex items-center justify-center gap-2 border border-border py-2.5 rounded-lg font-medium hover:bg-secondary transition-colors text-foreground"
         >
           <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="h-5 w-5" />
