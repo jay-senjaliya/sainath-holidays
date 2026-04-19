@@ -47,6 +47,7 @@ spring:
 
 server:
   port: ${PORT:8080}
+  forward-headers-strategy: framework
   compression:
     enabled: true
     min-response-size: 2048
