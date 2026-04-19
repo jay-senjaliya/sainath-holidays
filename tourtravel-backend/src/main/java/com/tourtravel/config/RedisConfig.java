@@ -21,7 +21,7 @@ import java.time.Duration;
  * NOTE: Excluded in the "dev" profile — run without a local Redis server.
  */
 @Configuration
-@Profile("!dev")
+@Profile({"!dev", "!prod"})
 public class RedisConfig {
 
     /**
