@@ -1,4 +1,4 @@
-# Wanderlust Tour & Travel Platform
+# Sainath Holidays Tour & Travel Platform
 
 A production-ready Tour & Travel Agency platform built with Spring Boot 3, React 18, Vite, PostgreSQL, and Redis.
 

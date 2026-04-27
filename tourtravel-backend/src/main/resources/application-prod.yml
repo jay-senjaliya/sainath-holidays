@@ -60,7 +60,7 @@ jwt:
 logging:
   level:
     root: INFO
-    com.tourtravel: DEBUG
+    com.tourtravel: INFO
     org.springframework.web: INFO
     org.hibernate.SQL: ERROR
-    org.springframework.security: DEBUG
+    org.springframework.security: INFO

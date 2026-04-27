@@ -6,7 +6,7 @@ export function AuthLayout() {
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500">
-            Wanderlust
+            Sainath Holidays
           </h1>
           <p className="text-muted-foreground mt-2">Sign in to your account</p>
         </div>
