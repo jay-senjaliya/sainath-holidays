@@ -34,6 +34,7 @@ public final class AppConstants {
         "/api/v1/packages/**",
         "/api/v1/vehicles",
         "/api/v1/hotels",
+        "/api/v1/quotations/shared/**",
         "/swagger-ui/**",
         "/v3/api-docs/**",
         "/actuator/health"

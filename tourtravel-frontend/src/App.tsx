@@ -11,6 +11,12 @@ import { PublicVehicles } from '@/features/vehicles/PublicVehicles';
 import { PublicHotels } from '@/features/hotels/PublicHotels';
 import { PublicTickets } from '@/features/tickets/PublicTickets';
 import { AdminDashboard } from '@/features/admin/AdminDashboard';
+import { AdminCustomers } from '@/features/admin/AdminCustomers';
+import { AdminCustomerDetail } from '@/features/admin/AdminCustomerDetail';
+import { AdminLeads } from '@/features/admin/AdminLeads';
+import { AdminQuotations } from '@/features/admin/AdminQuotations';
+import { AdminQuotationView } from '@/features/admin/AdminQuotationView';
+import { AdminCompanySettings } from '@/features/admin/AdminCompanySettings';
 import { AdminPackages } from '@/features/admin/AdminPackages';
 import { AdminVehicles } from '@/features/admin/AdminVehicles';
 import { AdminHotels } from '@/features/admin/AdminHotels';
@@ -62,6 +68,12 @@ function App() {
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="customers" element={<AdminCustomers />} />
+          <Route path="customers/:id" element={<AdminCustomerDetail />} />
+          <Route path="leads" element={<AdminLeads />} />
+          <Route path="quotations" element={<AdminQuotations />} />
+          <Route path="quotations/:id" element={<AdminQuotationView />} />
+          <Route path="settings/company" element={<AdminCompanySettings />} />
           <Route path="packages" element={<AdminPackages />} />
           <Route path="vehicles" element={<AdminVehicles />} />
           <Route path="hotels" element={<AdminHotels />} />

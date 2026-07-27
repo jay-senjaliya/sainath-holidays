@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Link, useLocation } from "react-router-dom"
-import { Palmtree, LayoutDashboard, Package, Car, Building2, MessageSquare, LogOut, Calendar as CalendarIcon, Menu, X, Globe, Moon, Sun } from "lucide-react"
+import { Palmtree, LayoutDashboard, Users, UserPlus, FileText, Package, Car, Building2, MessageSquare, LogOut, Calendar as CalendarIcon, Menu, X, Globe, Moon, Sun, Settings } from "lucide-react"
 import { useAuthStore } from "@/store/useAuthStore"
 import { useTheme } from "@/components/shared/ThemeProvider"
 
@@ -13,11 +13,15 @@ interface SidebarProps {
 const SidebarContent = ({ location, onClose, logout }: SidebarProps) => {
   const navItems = [
     { label: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
+    { label: 'Customers', path: '/admin/customers', icon: Users },
+    { label: 'Leads', path: '/admin/leads', icon: UserPlus },
+    { label: 'Quotations', path: '/admin/quotations', icon: FileText },
     { label: 'Packages', path: '/admin/packages', icon: Package },
     { label: 'Bookings', path: '/admin/bookings', icon: CalendarIcon },
     { label: 'Vehicles', path: '/admin/vehicles', icon: Car },
     { label: 'Hotels', path: '/admin/hotels', icon: Building2 },
     { label: 'Enquiries', path: '/admin/enquiries', icon: MessageSquare },
+    { label: 'Company Settings', path: '/admin/settings/company', icon: Settings },
     { label: 'Back to Website', path: '/', icon: Globe, highlight: true },
   ];
 

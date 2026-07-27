@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="'Quotation ' + ${quotationNumber}">Quotation</title>
+  <style>
+    @page { size: A4; margin: 2.2cm 1.8cm; }
+    body { font-family: 'Helvetica', 'Arial', sans-serif; font-size: 11px; color: #1a1a1a; }
+    /* openhtmltopdf doesn't support CSS flexbox — a two-column header uses
+       CSS display:table instead, which it renders reliably. */
+    .header { display: table; width: 100%; border-bottom: 2px solid #0e2e50; padding-bottom: 14px; margin-bottom: 18px; }
+    .header-cell { display: table-cell; vertical-align: top; }
+    .header img { max-height: 56px; max-width: 160px; }
+    .company-name { font-size: 20px; font-weight: bold; color: #0e2e50; margin: 0 0 4px 0; }
+    .company-meta { font-size: 9.5px; color: #555; line-height: 1.5; }
+    .doc-title { text-align: right; }
+    .doc-title h1 { font-size: 18px; margin: 0; color: #0e2e50; }
+    .doc-title .quote-number { font-size: 13px; font-weight: bold; margin-top: 2px; }
+    .meta-table { width: 100%; margin-bottom: 16px; border-collapse: collapse; }
+    .meta-table td { padding: 3px 0; font-size: 10.5px; }
+    .meta-table td.label { color: #666; width: 110px; }
+    .section-title { font-size: 12px; font-weight: bold; color: #0e2e50; text-transform: uppercase; letter-spacing: 0.5px; margin: 18px 0 8px 0; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    .customer-block p { margin: 2px 0; }
+    table.items { width: 100%; border-collapse: collapse; margin-top: 6px; }
+    table.items th { background: #0e2e50; color: #fff; text-align: left; padding: 6px 8px; font-size: 9.5px; text-transform: uppercase; }
+    table.items td { padding: 6px 8px; border-bottom: 1px solid #eee; font-size: 10.5px; }
+    table.items td.num { text-align: right; }
+    table.totals { width: 260px; margin-left: auto; margin-top: 10px; border-collapse: collapse; }
+    table.totals td { padding: 4px 8px; font-size: 11px; }
+    table.totals td.label { color: #555; }
+    table.totals td.value { text-align: right; }
+    table.totals tr.final td { font-weight: bold; font-size: 13px; border-top: 2px solid #0e2e50; color: #0e2e50; }
+    .notes, .terms { margin-top: 14px; font-size: 10px; color: #444; white-space: pre-wrap; line-height: 1.5; }
+    .terms { border-top: 1px solid #ddd; padding-top: 10px; margin-top: 20px; }
+    .footer { margin-top: 24px; text-align: center; font-size: 10px; color: #888; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-cell">
+      <img th:if="${companyLogoUrl}" th:src="${companyLogoUrl}" alt="logo" />
+      <p class="company-name" th:text="${companyName}">Company Name</p>
+      <p class="company-meta">
+        <span th:if="${companyAddress}" th:text="${companyAddress}"></span><br/>
+        <span th:if="${companyPhone}" th:text="${companyPhone}"></span>
+        <span th:if="${companyPhone and companyEmail}"> · </span>
+        <span th:if="${companyEmail}" th:text="${companyEmail}"></span><br/>
+        <span th:if="${companyGstNumber}" th:text="'GSTIN: ' + ${companyGstNumber}"></span>
+      </p>
+    </div>
+    <div class="header-cell doc-title">
+      <h1>QUOTATION</h1>
+      <div class="quote-number" th:text="${quotationNumber}"></div>
+    </div>
+  </div>
+
+  <table class="meta-table">
+    <tr>
+      <td class="label">Date</td>
+      <td th:text="${createdAt}"></td>
+      <td class="label">Valid Until</td>
+      <td th:text="${validUntil}"></td>
+    </tr>
+    <tr>
+      <td class="label">Status</td>
+      <td th:text="${status}"></td>
+      <td class="label">Travel Date</td>
+      <td th:text="${travelDate}"></td>
+    </tr>
+  </table>
+
+  <div class="section-title">Prepared For</div>
+  <div class="customer-block">
+    <p th:text="${customerName}"></p>
+    <p th:text="${customerPhone}"></p>
+    <p th:if="${customerEmail}" th:text="${customerEmail}"></p>
+  </div>
+
+  <div class="section-title">Trip Details</div>
+  <table class="meta-table">
+    <tr>
+      <td class="label">Package</td>
+      <td th:text="${packageTitle} ?: 'Custom Itinerary'"></td>
+      <td class="label">Travelers</td>
+      <td th:text="${numberOfAdults} + ' Adult(s), ' + ${numberOfChildren} + ' Child(ren)'"></td>
+    </tr>
+  </table>
+
+  <th:block th:if="${not #lists.isEmpty(items)}">
+    <div class="section-title">Itinerary &amp; Pricing</div>
+    <table class="items">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="item : ${items}">
+          <td th:text="${item.type}"></td>
+          <td th:text="${item.name}"></td>
+          <td class="num" th:text="${item.quantity}"></td>
+          <td class="num" th:text="${item.unitPrice}"></td>
+          <td class="num" th:text="${item.subtotal}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </th:block>
+
+  <table class="totals">
+    <tr>
+      <td class="label">Total Amount</td>
+      <td class="value" th:text="${totalAmount}"></td>
+    </tr>
+    <tr>
+      <td class="label">Discount</td>
+      <td class="value" th:text="${discount}"></td>
+    </tr>
+    <tr class="final">
+      <td class="label">Final Amount</td>
+      <td class="value" th:text="${finalAmount}"></td>
+    </tr>
+  </table>
+
+  <div th:if="${notes}" class="notes">
+    <div class="section-title">Notes</div>
+    <p th:text="${notes}"></p>
+  </div>
+
+  <div th:if="${termsAndConditions}" class="terms">
+    <div class="section-title">Terms &amp; Conditions</div>
+    <p th:text="${termsAndConditions}"></p>
+  </div>
+
+  <div class="footer">
+    <p>Thank you for choosing <span th:text="${companyName}"></span>!</p>
+  </div>
+
+</body>
+</html>

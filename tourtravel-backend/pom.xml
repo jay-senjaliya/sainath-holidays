@@ -24,6 +24,8 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok.version>1.18.30</lombok.version>
         <springdoc.version>2.3.0</springdoc.version>
+        <openhtmltopdf.version>1.0.10</openhtmltopdf.version>
+        <jsoup.version>1.17.2</jsoup.version>
     </properties>
 
     <dependencies>
@@ -121,6 +123,34 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Thymeleaf (Quotation PDF templating — no MVC views used, safe alongside REST controllers).
+             ognl is added explicitly: Thymeleaf 3.1+ made it an optional dependency
+             (a real gap caught by QuotationPdfServiceTest, not an assumption) —
+             without it, standard ${...} expressions fail at render time, not at compile time. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ognl</groupId>
+            <artifactId>ognl</artifactId>
+            <version>3.3.4</version>
+        </dependency>
+
+        <!-- PDF rendering: HTML/CSS -> PDF via openhtmltopdf, fed a well-formed W3C
+             document parsed leniently by jsoup (Thymeleaf's raw HTML output isn't
+             strict XHTML, so it can't be fed to openhtmltopdf directly). -->
+        <dependency>
+            <groupId>com.openhtmltopdf</groupId>
+            <artifactId>openhtmltopdf-pdfbox</artifactId>
+            <version>${openhtmltopdf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>${jsoup.version}</version>
         </dependency>
 
         <!-- Test -->
